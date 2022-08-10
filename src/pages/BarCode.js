@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, FormEvent } from "react";
 import {
   Text,
   View,
@@ -10,6 +10,8 @@ import {
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 import { AuthContext } from "../contexts/auth";
+
+import api from "../services/api";
 
 const BarCode = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -62,27 +64,28 @@ const BarCode = () => {
     );
   }
 
-  const handleSubmit = () => {
-    if (width !== "" && height !== "" && depth !== "") {
-      alert(text);
-      alert(width);
-      alert(height);
-      alert(depth);
-      alert(user);
-    }
-    console.log(
-      "CodBarras: " +
-        text +
-        " Altura: " +
-        width +
-        " Largura: " +
-        height +
-        " Produndidade: " +
-        depth +
-        " Usuário: " +
-        user
-    );
-  };
+  function handleSubmit() {
+    if (width != "" && height != "" && depth != "")
+      api
+        .post("product", {
+          user: user,
+          codeBar: text,
+          width: width,
+          height: height,
+          depth: depth,
+        })
+        .then(() => {
+          alert("Cadastro realizado com sucesso");
+        })
+        .catch((err) => {
+          alert("Erro no cadastro");
+          console.log(err);
+        });
+
+    setWidth("");
+    setHeight("");
+    setDepth("");
+  }
 
   // Return the View
   return (
@@ -107,18 +110,21 @@ const BarCode = () => {
         placeholder="ALTURA"
         style={styles.input}
         keyboardType="numeric"
+        value={width}
         onChangeText={(text) => setWidth(text)}
       />
       <TextInput
         placeholder="LARGURA"
         style={styles.input}
         keyboardType="numeric"
+        value={height}
         onChangeText={(text) => setHeight(text)}
       />
       <TextInput
         placeholder="PROFUNDIDADE"
         style={styles.input}
         keyboardType="numeric"
+        value={depth}
         onChangeText={(text) => setDepth(text)}
       />
 
