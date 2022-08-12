@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./src/pages/Login";
 import BarCode from "./src/pages/BarCode";
+import ProductList from "./src/pages/ProductList";
 
 import AuthProvider from "./src/contexts/auth";
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="BarCode" component={BarCode} />
+          <Stack.Screen name="ProductList" component={ProductList} />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>

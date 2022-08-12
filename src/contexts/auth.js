@@ -12,12 +12,13 @@ function AuthProvider({ children }) {
     if (user !== "") {
       setUser(user);
 
-      navigation.navigate("BarCode");
+      //navigation.navigate("BarCode");
+      navigation.navigate("ProductList");
     }
   }
 
   return (
-    <AuthContext.Provider value={{ usuario: 69952, singIn, user }}>
+    <AuthContext.Provider value={{ singIn, user }}>
       {children}
     </AuthContext.Provider>
   );
